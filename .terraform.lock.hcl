@@ -4,6 +4,7 @@
 provider "registry.terraform.io/kreuzwerker/docker" {
   version = "2.14.0"
   hashes = [
+    "h1:3XKyNQqQ2P4iL/1bqa6KuhasquQ4ioWvyoNktjrKEq4=",
     "h1:tvLqMbU4X1QkpaTGjJkpHDJq7yq18aOxYcBzwJmUp3s=",
     "zh:2c79f6e150c6f638310f4d52dcc789a112ac76fb3c6173fb1db9fae95d32a7f0",
     "zh:35564e66530b7a638a56dd885b9a5063c366d1e25f81a5e27da8ae6660065109",
