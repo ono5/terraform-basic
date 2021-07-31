@@ -8,3 +8,8 @@ terraform {
 }
 
 provider "docker" {}
+
+resource "docker_image" "nodered_image" {
+  # docker image
+  name = "nodered/node-red]latest"
+}

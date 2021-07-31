@@ -1,22 +1,29 @@
 .PHONY: init validate plan apply destroy fmt console
 
 init:
-	docker-compose run --rm terraform init
+	terraform init
+	# docker-compose run --rm terraform init
 
 validate:
-	docker-compose run --rm terraform validate
+	terraform validate
+	# docker-compose run --rm terraform validate
 
 plan:
-	docker-compose run --rm terraform plan -auto-approve
+	terraform plan
+	# docker-compose run --rm terraform plan
 
 apply:
-	docker-compose run --rm terraform apply -auto-approve
+	terraform apply -auto-approve
+	# docker-compose run --rm terraform apply -auto-approve
 
 destroy:
-	docker-compose run --rm terraform destroy -auto-approve
+	terraform destroy -auto-approve
+	# docker-compose run --rm terraform destroy -auto-approve
 
 fmt:
-	docker-compose run --rm terraform fmt -recursive
+	terraform fmt -recursive --diff
+	# docker-compose run --rm terraform fmt -recursive --diff
 
 console:
-	docker-compose run --rm terraform console
+	terraform console
+	# docker-compose run --rm terraform console
