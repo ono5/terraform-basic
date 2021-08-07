@@ -1,4 +1,4 @@
-.PHONY: init validate plan apply destroy fmt console
+.PHONY: init validate plan apply destroy fmt console show
 
 init:
 	terraform init
@@ -27,3 +27,7 @@ fmt:
 console:
 	terraform console
 	# docker-compose run --rm terraform console
+
+show:
+	terraform show
+	# docker-compose run --rm terraform show
