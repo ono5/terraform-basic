@@ -9,37 +9,38 @@ terraform {
 
 provider "docker" {}
 
+resource "null_resource" "dockervol" {
+  provisioner "local-exec" {
+    command = "mkdir -p noderedvol/  && sudo chown -R 1000:1000 noderedvol/"
+  }
+}
+
 resource "docker_image" "nodered_image" {
   # docker image
-  name = "nodered/node-red:latest"
+  # name = lookup(var.image, terraform.workspace)
+  name = var.image[terraform.workspace]
 }
 
 resource "random_string" "random" {
-  count   = 2 # リソースを2つ作る
+  count   = local.container_count
   length  = 4
   special = false
   upper   = false
 }
 
 resource "docker_container" "nodered_container" {
-  count = length(random_string.random) // random数分作る
-  name  = join("-", ["nodered", random_string.random[count.index].result])
+  count = local.container_count
+  name  = join("-", ["nodered", terraform.workspace, random_string.random[count.index].result])
   image = docker_image.nodered_image.latest
   ports {
-    internal = 1880
-    # external = 1880
+    internal = var.int_port
+    # external = lookup(var.ext_port, terraform.workspace)[count.index]
+    external = var.ext_port[terraform.workspace][count.index]
   }
-}
 
-output "IP-Address" {
-  value = [
-    for i in docker_container.nodered_container[*] :
-  join(":", [i.ip_address], i.ports[*]["external"])]
-
-  description = "The IP address of the container"
-}
-
-output "container-name" {
-  value       = docker_container.nodered_container[*].name
-  description = "The name of the container"
+  volumes {
+    container_path = "/data"
+    // ローカルのパス
+    host_path = "${path.cwd}/noderedvol"
+  }
 }
